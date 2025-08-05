@@ -1,0 +1,23 @@
+document.getElementById('checkoutBtn').addEventListener('click', () => {
+    if (cart.length === 0) {
+      showToast('Your cart is empty');
+      return;
+    }
+    
+    if (!currentUser) {
+      showToast('Please login to proceed with checkout');
+      showModal('loginModal');
+      return;
+    }
+    
+    // Simple checkout simulation
+    const total = cart.reduce((sum, item) => {
+      const product = products.find(p => p.id === item.productId);
+      return sum + (product.price * item.quantity);
+    }, 0);
+    
+    showToast(`Order placed successfully! Total: ${formatPrice(total)}`);
+    cart = [];
+    updateCartUI();
+    document.getElementById('cartSidebar').classList.remove('active');
+  });
